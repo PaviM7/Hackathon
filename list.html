@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<script src= "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="mycontroller">
+<p>fffff <span ng-show="tab1">&#10004; </span></p>
+<p>ggggg <span ng-show="tab2">&#10004; </span></p>
+<p>hhhhh <span ng-show="tab3">&#10004; </span></p>
+<p>iiiii <span ng-show="tab4">&#10004; </span></p>
+<div ui-view="body"></div>
+<button type="submit" style="float:right" ng-click="toggletick()" ng-disabled="disablenext">Next</button>
+<button type="submit" style="float:right" ng-click="toggletickback()" ng-disabled="count==countprev">Previous</button>
+<script>
+var app = angular.module("myApp",['ui.router']);
+app.config(['$stateProvider', '$urlRouterProvider', 
+         function($stateProvider, $urlRouterProvider) {
+           $urlRouterProvider.otherwise('/');
+           $stateProvider
+             .state('home', {
+               url: '/',
+               views: {
+                 '': { templateUrl: 'list.html'},
+                 
+                 'body@home': { templateUrl: 'index.jsp'}
+                 
+              }
+           });
+         }
+       ]);
+app.controller("mycontroller",function($scope)
+		{
+	$scope.count=0;
+	$scope.countprev = 0;
+	$scope.current=0;
+	$scope.disablenext = false;
+	$scope.tab1 = false;
+	$scope.tab2 = false;
+	$scope.tab3 = false;
+	$scope.tab4 = false;
+	$scope.toggletick = function()
+	{
+	$scope.count = $scope.count+1;
+	$scope.current = $scope.count-$scope.countprev;
+	
+	/* if($scope.current>4)
+	{
+		$scope.count = $scope.count-($scope.current-4);
+		//$scope.disablenext = true;
+	} */
+	if($scope.current==0)
+		{
+		$scope.tab1 = false;
+		$scope.tab2 = false;
+		$scope.tab3 = false;
+		$scope.tab4 = false;
+		$scope.disablenext = false;
+		}
+	if($scope.current==1)
+		{
+		$scope.tab1 = true;
+		$scope.tab2 = false;
+		$scope.tab3 = false;
+		$scope.tab4 = false;
+		$scope.disablenext = false;
+		}
+	if($scope.current==2)
+		{
+		$scope.tab1 = true;
+		$scope.tab2 = true;
+		$scope.tab3 = false;
+		$scope.tab4 = false;
+		$scope.disablenext = false;
+		}
+	if($scope.current==3)
+		{
+		$scope.tab1 = true;
+		$scope.tab2 = true;
+		$scope.tab3 = true;
+		$scope.tab4 = false;
+		$scope.disablenext = false;
+		}
+	if($scope.current==4)
+		{
+		$scope.tab1 = true;
+		$scope.tab2 = true;
+		$scope.tab3 = true;
+		$scope.tab4 = true;
+		$scope.disablenext = true;
+		}
+	//alert($scope.count+","+$scope.countprev);
+	};
+	
+	$scope.toggletickback = function()
+	{
+		$scope.countprev=$scope.countprev+1;
+		$scope.current = $scope.count-$scope.countprev;
+		/* if($scope.current>4){
+			$scope.count = $scope.count-($scope.current-4);
+			//$scope.disablenext = true;
+		} */
+		if($scope.current==0)
+			{
+			$scope.tab1 = false;
+			$scope.tab2 = false;
+			$scope.tab3 = false;
+			$scope.tab4 = false;
+			$scope.disablenext = false;
+			}
+		if($scope.current==1)
+			{
+			$scope.tab1 = true;
+			$scope.tab2 = false;
+			$scope.tab3 = false;
+			$scope.tab4 = false;
+			$scope.disablenext = false;
+			}
+		if($scope.current==2)
+			{
+			$scope.tab1 = true;
+			$scope.tab2 = true;
+			$scope.tab3 = false;
+			$scope.tab4 = false;
+			$scope.disablenext = false;
+			}
+		if($scope.current==3)
+			{
+			$scope.tab1 = true;
+			$scope.tab2 = true;
+			$scope.tab3 = true;
+			$scope.tab4 = false;
+			$scope.disablenext = false;
+			}
+		if($scope.current==4)
+			{
+			$scope.tab1 = true;
+			$scope.tab2 = true;
+			$scope.tab3 = true;
+			$scope.tab4 = true;
+			$scope.disablenext = true;
+			}
+		//alert($scope.count+","+$scope.countprev);
+	};
+	
+		});
+</script>
+</body>
+</html>
